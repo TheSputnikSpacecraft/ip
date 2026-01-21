@@ -51,10 +51,39 @@ public class Requiem {
                 System.out.println(" OK, I've marked this task as not done yet:");
                 System.out.println("   " + tasks[index]);
                 System.out.println("____________________________________________________________");
-            } else {
-                tasks[taskCount] = new Task(input);
+            } else if (input.startsWith("todo ")) {
+                String description = input.substring(5);
+                tasks[taskCount] = new Todo(description);
                 taskCount++;
-                System.out.println(" added: " + input);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+            } else if (input.startsWith("deadline ")) {
+                int byIndex = input.indexOf("/by");
+                String description = input.substring(9, byIndex).trim();
+                String by = input.substring(byIndex + 3).trim();
+                tasks[taskCount] = new Deadline(description, by);
+                taskCount++;
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+            } else if (input.startsWith("event ")) {
+                int fromIndex = input.indexOf("/from");
+                int toIndex = input.indexOf("/to");
+                String description = input.substring(6, fromIndex).trim();
+                String from = input.substring(fromIndex + 5, toIndex).trim();
+                String to = input.substring(toIndex + 3).trim();
+                tasks[taskCount] = new Event(description, from, to);
+                taskCount++;
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + tasks[taskCount - 1]);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                System.out.println("____________________________________________________________");
+            } else {
+                // Fallback
+                System.out.println(" OOPS!!! I'm sorry, but I don't know what that means :-(");
                 System.out.println("____________________________________________________________");
             }
         }
