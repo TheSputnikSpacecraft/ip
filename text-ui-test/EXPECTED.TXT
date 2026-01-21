@@ -8,19 +8,30 @@ ____________________________________________________________
  Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- Yare Yare Daze The description of a todo cannot be empty.
-____________________________________________________________
-____________________________________________________________
- Yare Yare Daze I'm sorry, but I don't know what that means :-(
-____________________________________________________________
-____________________________________________________________
  Got it. I've added this task:
-   [D][ ] return book (by: Sunday)
+   [T][ ] read book
  Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this task:
+   [D][ ] return book (by: Sunday)
+ Now you have 3 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Got it. I've added this task:
    [E][ ] project meeting (from: Mon 2pm to: 4pm)
+ Now you have 4 tasks in the list.
+____________________________________________________________
+____________________________________________________________
+ Here are the tasks in your list:
+ 1.[T][ ] borrow book
+ 2.[T][ ] read book
+ 3.[D][ ] return book (by: Sunday)
+ 4.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+____________________________________________________________
+____________________________________________________________
+ Noted. I've removed this task:
+   [T][ ] read book
  Now you have 3 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
@@ -30,12 +41,14 @@ ____________________________________________________________
  3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
- Nice! I've marked this task as done:
-   [D][X] return book (by: Sunday)
+ Noted. I've removed this task:
+   [T][ ] borrow book
+ Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
- OK, I've marked this task as not done yet:
-   [D][ ] return book (by: Sunday)
+ Here are the tasks in your list:
+ 1.[D][ ] return book (by: Sunday)
+ 2.[E][ ] project meeting (from: Mon 2pm to: 4pm)
 ____________________________________________________________
 ____________________________________________________________
  Bye. Hope to see you again soon!
