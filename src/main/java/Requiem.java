@@ -34,9 +34,22 @@ public class Requiem {
                 System.out.println(exit);
                 break;
             } else if (input.equals("list")) {
+                System.out.println(" Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
-                    System.out.println(" " + (i + 1) + ". " + tasks[i]);
+                    System.out.println(" " + (i + 1) + "." + tasks[i]);
                 }
+                System.out.println("____________________________________________________________");
+            } else if (input.startsWith("mark ")) {
+                int index = Integer.parseInt(input.split(" ")[1]) - 1;
+                tasks[index].markAsDone();
+                System.out.println(" Nice! I've marked this task as done:");
+                System.out.println("   " + tasks[index]);
+                System.out.println("____________________________________________________________");
+            } else if (input.startsWith("unmark ")) {
+                int index = Integer.parseInt(input.split(" ")[1]) - 1;
+                tasks[index].markAsUndone();
+                System.out.println(" OK, I've marked this task as not done yet:");
+                System.out.println("   " + tasks[index]);
                 System.out.println("____________________________________________________________");
             } else {
                 tasks[taskCount] = new Task(input);
