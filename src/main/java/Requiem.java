@@ -22,12 +22,16 @@ public class Requiem {
 
         System.out.println(greeting);
 
-        ArrayList<Task> tasks = new ArrayList<>();
+        Storage storage = new Storage("requiem.txt");
+        ArrayList<Task> tasks = storage.load();
 
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String input = scanner.nextLine();
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                continue;
+            }
             System.out.println("____________________________________________________________");
 
             try {
@@ -52,19 +56,23 @@ public class Requiem {
                         System.out.println("____________________________________________________________");
                         break;
                     case MARK:
-                        if (words.length < 2)
+                        if (words.length < 2) {
                             throw new RequiemException("You need to specify a task index to mark.");
+                        }
                         int markIndex = Integer.parseInt(words[1]) - 1;
                         tasks.get(markIndex).markAsDone();
+                        storage.save(tasks);
                         System.out.println(" Nice! I've marked this task as done:");
                         System.out.println("   " + tasks.get(markIndex));
                         System.out.println("____________________________________________________________");
                         break;
                     case UNMARK:
-                        if (words.length < 2)
+                        if (words.length < 2) {
                             throw new RequiemException("You need to specify a task index to unmark.");
+                        }
                         int unmarkIndex = Integer.parseInt(words[1]) - 1;
                         tasks.get(unmarkIndex).markAsUndone();
+                        storage.save(tasks);
                         System.out.println(" OK, I've marked this task as not done yet:");
                         System.out.println("   " + tasks.get(unmarkIndex));
                         System.out.println("____________________________________________________________");
@@ -75,6 +83,7 @@ public class Requiem {
                         }
                         Task todo = new Todo(words[1].trim());
                         tasks.add(todo);
+                        storage.save(tasks);
                         System.out.println(" Got it. I've added this task:");
                         System.out.println("   " + todo);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -95,6 +104,7 @@ public class Requiem {
                         String by = input.substring(byIndex + 3).trim();
                         Task deadline = new Deadline(deadlineDesc, by);
                         tasks.add(deadline);
+                        storage.save(tasks);
                         System.out.println(" Got it. I've added this task:");
                         System.out.println("   " + deadline);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -113,20 +123,23 @@ public class Requiem {
                         if (eventDesc.isEmpty()) {
                             throw new RequiemException("The description of an event cannot be empty.");
                         }
-                        String from = input.substring(fromIndex + 5, toIndex).trim();
+                        String event = input.substring(fromIndex + 5, toIndex).trim();
                         String to = input.substring(toIndex + 3).trim();
-                        Task event = new Event(eventDesc, from, to);
-                        tasks.add(event);
+                        Task eventTask = new Event(eventDesc, event, to);
+                        tasks.add(eventTask);
+                        storage.save(tasks);
                         System.out.println(" Got it. I've added this task:");
-                        System.out.println("   " + event);
+                        System.out.println("   " + eventTask);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                         System.out.println("____________________________________________________________");
                         break;
                     case DELETE:
-                        if (words.length < 2)
+                        if (words.length < 2) {
                             throw new RequiemException("You need to specify a task index to delete.");
+                        }
                         int deleteIndex = Integer.parseInt(words[1]) - 1;
                         Task removedTask = tasks.remove(deleteIndex);
+                        storage.save(tasks);
                         System.out.println(" Noted. I've removed this task:");
                         System.out.println("   " + removedTask);
                         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
