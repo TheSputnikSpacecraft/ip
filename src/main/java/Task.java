@@ -48,4 +48,13 @@ public class Task {
     public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
+
+    /**
+     * Returns the string representation of the task for saving to a file.
+     *
+     * @return File-friendly string representation.
+     */
+    public String toFileFormat() {
+        return (isDone ? "1" : "0") + " | " + description;
+    }
 }
