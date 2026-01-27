@@ -102,12 +102,18 @@ public class Requiem {
                             throw new RequiemException("The description of a deadline cannot be empty.");
                         }
                         String by = input.substring(byIndex + 3).trim();
-                        Task deadline = new Deadline(deadlineDesc, by);
-                        tasks.add(deadline);
-                        storage.save(tasks);
-                        System.out.println(" Got it. I've added this task:");
-                        System.out.println("   " + deadline);
-                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                        try {
+                            java.time.LocalDate date = java.time.LocalDate.parse(by);
+                            Task deadline = new Deadline(deadlineDesc, date);
+                            tasks.add(deadline);
+                            storage.save(tasks);
+                            System.out.println(" Got it. I've added this task:");
+                            System.out.println("   " + deadline);
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                        } catch (java.time.format.DateTimeParseException e) {
+                            System.out.println(
+                                    " WRRYYYYYY!!! Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
+                        }
                         System.out.println("____________________________________________________________");
                         break;
                     case EVENT:
@@ -123,14 +129,21 @@ public class Requiem {
                         if (eventDesc.isEmpty()) {
                             throw new RequiemException("The description of an event cannot be empty.");
                         }
-                        String event = input.substring(fromIndex + 5, toIndex).trim();
+                        String from = input.substring(fromIndex + 5, toIndex).trim();
                         String to = input.substring(toIndex + 3).trim();
-                        Task eventTask = new Event(eventDesc, event, to);
-                        tasks.add(eventTask);
-                        storage.save(tasks);
-                        System.out.println(" Got it. I've added this task:");
-                        System.out.println("   " + eventTask);
-                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                        try {
+                            java.time.LocalDate fromDate = java.time.LocalDate.parse(from);
+                            java.time.LocalDate toDate = java.time.LocalDate.parse(to);
+                            Task eventTask = new Event(eventDesc, fromDate, toDate);
+                            tasks.add(eventTask);
+                            storage.save(tasks);
+                            System.out.println(" Got it. I've added this task:");
+                            System.out.println("   " + eventTask);
+                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+                        } catch (java.time.format.DateTimeParseException e) {
+                            System.out.println(
+                                    " WRRYYYYYY!!! Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
+                        }
                         System.out.println("____________________________________________________________");
                         break;
                     case DELETE:
