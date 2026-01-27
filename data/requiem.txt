@@ -1,14 +1,5 @@
-T | 1 | b
-T | 0 | touch niru
-D | 0 | return book | June 6th
-E | 0 | project meeting | Aug 6th 2pm | Aug 6th 4pm
-T | 0 | verify save
-T | 0 | read book
-D | 0 | return book | June 6th
-E | 0 | project meeting | Aug 6th 2pm | Aug 6th 4pm
-D | 0 | return book | June 6th
-D | 0 | return book | June 6th
-D | 0 | return book | June 6th
-T | 0 | niru
-T | 0 | anjan
-T | 0 | niru
+D | 0 | return book | 2019-12-02
+D | 0 | submit report | 2023-01-01
+E | 0 | do CS2103 | 2026-02-01 | 2026-02-01
+D | 0 | do CS2103 | 2026-02-01
+E | 0 | do CS2103 | 2026-02-01 | 2026-02-01

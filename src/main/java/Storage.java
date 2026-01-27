@@ -93,12 +93,23 @@ public class Storage {
                     break;
                 case "D":
                     if (parts.length >= 4) {
-                        task = new Deadline(description, parts[3]);
+                        try {
+                            java.time.LocalDate date = java.time.LocalDate.parse(parts[3]);
+                            task = new Deadline(description, date);
+                        } catch (java.time.format.DateTimeParseException e) {
+                            // Skip corrupted date
+                        }
                     }
                     break;
                 case "E":
                     if (parts.length >= 5) {
-                        task = new Event(description, parts[3], parts[4]);
+                        try {
+                            java.time.LocalDate fromDate = java.time.LocalDate.parse(parts[3]);
+                            java.time.LocalDate toDate = java.time.LocalDate.parse(parts[4]);
+                            task = new Event(description, fromDate, toDate);
+                        } catch (java.time.format.DateTimeParseException e) {
+                            // Skip corrupted date
+                        }
                     }
                     break;
             }
