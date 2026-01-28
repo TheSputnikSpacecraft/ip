@@ -1,172 +1,64 @@
-import java.util.Scanner;
-import java.util.ArrayList;
-
 /**
  * Requiem is a personal assistant chatbot.
- * It currently supports greeting, echoing user input, and exiting.
+ * It follows an OOP structure with specialized classes for Ui, Storage,
+ * TaskList, and Parser.
  */
 public class Requiem {
+
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    /**
+     * Initializes the Requiem assistant.
+     *
+     * @param fileName The name of the file used for storage.
+     */
+    public Requiem(String fileName) {
+        ui = new Ui();
+        storage = new Storage(fileName);
+        try {
+            tasks = new TaskList(storage.load());
+        } catch (Exception e) {
+            ui.showLoadingError();
+            tasks = new TaskList();
+        }
+    }
+
+    /**
+     * Runs the main loop of the assistant.
+     */
+    public void run() {
+        ui.showWelcome();
+        boolean isExit = false;
+
+        while (!isExit) {
+            try {
+                String fullCommand = ui.readCommand();
+                if (fullCommand.isEmpty()) {
+                    continue;
+                }
+                ui.showLine();
+                Command c = Parser.parse(fullCommand);
+                c.execute(tasks, ui, storage);
+                isExit = c.isExit();
+            } catch (RequiemException e) {
+                ui.showError(e.getMessage());
+            } catch (Exception e) {
+                ui.showError(e.getMessage());
+            } finally {
+                ui.showLine();
+            }
+        }
+        ui.close();
+    }
+
     /**
      * Entry point of the application.
-     * Reads user input and echoes it back until the "bye" command is received.
      *
      * @param args (not used).
      */
     public static void main(String[] args) {
-        String greeting = "____________________________________________________________\n" +
-                " Hello! I'm Requiem\n" +
-                " What can I do for you?\n" +
-                "____________________________________________________________";
-        String exit = " Bye. Hope to see you again soon!\n" +
-                "____________________________________________________________";
-
-        System.out.println(greeting);
-
-        Storage storage = new Storage("requiem.txt");
-        ArrayList<Task> tasks = storage.load();
-
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            String input = scanner.nextLine().trim();
-            if (input.isEmpty()) {
-                continue;
-            }
-            System.out.println("____________________________________________________________");
-
-            try {
-                String[] words = input.split(" ", 2);
-                Command command;
-                try {
-                    command = Command.valueOf(words[0].toUpperCase());
-                } catch (IllegalArgumentException e) {
-                    throw new RequiemException("I'm sorry, but I don't know what that means :-(");
-                }
-
-                switch (command) {
-                    case BYE:
-                        System.out.println(exit);
-                        scanner.close();
-                        return;
-                    case LIST:
-                        System.out.println(" Here are the tasks in your list:");
-                        for (int i = 0; i < tasks.size(); i++) {
-                            System.out.println(" " + (i + 1) + "." + tasks.get(i));
-                        }
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case MARK:
-                        if (words.length < 2) {
-                            throw new RequiemException("You need to specify a task index to mark.");
-                        }
-                        int markIndex = Integer.parseInt(words[1]) - 1;
-                        tasks.get(markIndex).markAsDone();
-                        storage.save(tasks);
-                        System.out.println(" Nice! I've marked this task as done:");
-                        System.out.println("   " + tasks.get(markIndex));
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case UNMARK:
-                        if (words.length < 2) {
-                            throw new RequiemException("You need to specify a task index to unmark.");
-                        }
-                        int unmarkIndex = Integer.parseInt(words[1]) - 1;
-                        tasks.get(unmarkIndex).markAsUndone();
-                        storage.save(tasks);
-                        System.out.println(" OK, I've marked this task as not done yet:");
-                        System.out.println("   " + tasks.get(unmarkIndex));
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case TODO:
-                        if (words.length < 2 || words[1].trim().isEmpty()) {
-                            throw new RequiemException("The description of a todo cannot be empty.");
-                        }
-                        Task todo = new Todo(words[1].trim());
-                        tasks.add(todo);
-                        storage.save(tasks);
-                        System.out.println(" Got it. I've added this task:");
-                        System.out.println("   " + todo);
-                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case DEADLINE:
-                        if (words.length < 2 || words[1].trim().isEmpty()) {
-                            throw new RequiemException("The description of a deadline cannot be empty.");
-                        }
-                        int byIndex = input.indexOf("/by");
-                        if (byIndex == -1) {
-                            throw new RequiemException("The deadline must have a /by time.");
-                        }
-                        String deadlineDesc = input.substring(9, byIndex).trim();
-                        if (deadlineDesc.isEmpty()) {
-                            throw new RequiemException("The description of a deadline cannot be empty.");
-                        }
-                        String by = input.substring(byIndex + 3).trim();
-                        try {
-                            java.time.LocalDate date = java.time.LocalDate.parse(by);
-                            Task deadline = new Deadline(deadlineDesc, date);
-                            tasks.add(deadline);
-                            storage.save(tasks);
-                            System.out.println(" Got it. I've added this task:");
-                            System.out.println("   " + deadline);
-                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        } catch (java.time.format.DateTimeParseException e) {
-                            System.out.println(
-                                    " WRRYYYYYY!!! Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
-                        }
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case EVENT:
-                        if (words.length < 2 || words[1].trim().isEmpty()) {
-                            throw new RequiemException("The description of an event cannot be empty.");
-                        }
-                        int fromIndex = input.indexOf("/from");
-                        int toIndex = input.indexOf("/to");
-                        if (fromIndex == -1 || toIndex == -1) {
-                            throw new RequiemException("The event must have /from and /to times.");
-                        }
-                        String eventDesc = input.substring(6, fromIndex).trim();
-                        if (eventDesc.isEmpty()) {
-                            throw new RequiemException("The description of an event cannot be empty.");
-                        }
-                        String from = input.substring(fromIndex + 5, toIndex).trim();
-                        String to = input.substring(toIndex + 3).trim();
-                        try {
-                            java.time.LocalDate fromDate = java.time.LocalDate.parse(from);
-                            java.time.LocalDate toDate = java.time.LocalDate.parse(to);
-                            Task eventTask = new Event(eventDesc, fromDate, toDate);
-                            tasks.add(eventTask);
-                            storage.save(tasks);
-                            System.out.println(" Got it. I've added this task:");
-                            System.out.println("   " + eventTask);
-                            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        } catch (java.time.format.DateTimeParseException e) {
-                            System.out.println(
-                                    " WRRYYYYYY!!! Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
-                        }
-                        System.out.println("____________________________________________________________");
-                        break;
-                    case DELETE:
-                        if (words.length < 2) {
-                            throw new RequiemException("You need to specify a task index to delete.");
-                        }
-                        int deleteIndex = Integer.parseInt(words[1]) - 1;
-                        Task removedTask = tasks.remove(deleteIndex);
-                        storage.save(tasks);
-                        System.out.println(" Noted. I've removed this task:");
-                        System.out.println("   " + removedTask);
-                        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-                        System.out.println("____________________________________________________________");
-                        break;
-                }
-            } catch (RequiemException e) {
-                System.out.println(" Yare Yare Daze " + e.getMessage());
-                System.out.println("____________________________________________________________");
-            } catch (Exception e) { // Catch-all for other errors like number format
-                System.out.println(" WRRYYYYYY!!! " + e.getMessage());
-                System.out.println("____________________________________________________________");
-            }
-        }
-
+        new Requiem("requiem.txt").run();
     }
 }
