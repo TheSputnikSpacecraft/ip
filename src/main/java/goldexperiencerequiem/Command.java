@@ -1,3 +1,4 @@
+package main.java.goldexperiencerequiem;
 /**
  * Represents an executable command.
  */

@@ -1,3 +1,4 @@
+package main.java.goldexperiencerequiem;
 /**
  * Represents exceptions specific to the Requiem chatbot.
  */

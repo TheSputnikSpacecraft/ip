@@ -1,10 +1,12 @@
+package main.java.goldexperiencerequiem;
+
 /**
- * Represents a command to delete a task from the task list.
+ * Represents a command to mark a task as undone in the task list.
  */
-public class DeleteCommand extends Command {
+public class UnmarkCommand extends Command {
     private final int index;
 
-    public DeleteCommand(int index) {
+    public UnmarkCommand(int index) {
         this.index = index;
     }
 
@@ -13,11 +15,11 @@ public class DeleteCommand extends Command {
         if (index < 0 || index >= tasks.size()) {
             throw new RequiemException("Task index out of bounds.");
         }
-        Task removedTask = tasks.deleteTask(index);
+        Task task = tasks.getTask(index);
+        task.markAsUndone();
         storage.save(tasks.getAllTasks());
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + removedTask);
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+        System.out.println(" OK, I've marked this task as not done yet:");
+        System.out.println("   " + task);
     }
 
     @Override
