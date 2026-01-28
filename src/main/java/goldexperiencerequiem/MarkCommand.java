@@ -1,10 +1,11 @@
+package main.java.goldexperiencerequiem;
 /**
- * Represents a command to mark a task as undone in the task list.
+ * Represents a command to mark a task as done in the task list.
  */
-public class UnmarkCommand extends Command {
+public class MarkCommand extends Command {
     private final int index;
 
-    public UnmarkCommand(int index) {
+    public MarkCommand(int index) {
         this.index = index;
     }
 
@@ -14,9 +15,9 @@ public class UnmarkCommand extends Command {
             throw new RequiemException("Task index out of bounds.");
         }
         Task task = tasks.getTask(index);
-        task.markAsUndone();
+        task.markAsDone();
         storage.save(tasks.getAllTasks());
-        System.out.println(" OK, I've marked this task as not done yet:");
+        System.out.println(" Nice! I've marked this task as done:");
         System.out.println("   " + task);
     }
 

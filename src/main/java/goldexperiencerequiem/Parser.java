@@ -1,3 +1,4 @@
+package main.java.goldexperiencerequiem;
 /**
  * Makes sense of user commands.
  */

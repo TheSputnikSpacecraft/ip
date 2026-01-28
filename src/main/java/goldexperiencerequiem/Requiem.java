@@ -1,3 +1,4 @@
+package main.java.goldexperiencerequiem;
 /**
  * Requiem is a personal assistant chatbot.
  * It follows an OOP structure with specialized classes for Ui, Storage,
