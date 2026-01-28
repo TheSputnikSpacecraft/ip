@@ -38,7 +38,7 @@ public class Storage {
             }
             writer.close();
         } catch (IOException e) {
-            System.out.println(" WRRYYYYYY!!! Error saving tasks: " + e.getMessage());
+            System.out.println(" Error saving tasks: " + e.getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ public class Storage {
             }
             scanner.close();
         } catch (IOException e) {
-            System.out.println(" WRRYYYYYY!!! Error loading tasks: " + e.getMessage());
+            System.out.println(" Error loading tasks: " + e.getMessage());
         }
 
         return tasks;
@@ -111,6 +111,8 @@ public class Storage {
                             // Skip corrupted date
                         }
                     }
+                    break;
+                default:
                     break;
             }
 

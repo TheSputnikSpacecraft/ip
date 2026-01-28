@@ -1,5 +1,8 @@
-D | 0 | return book | 2019-12-02
-D | 0 | submit report | 2023-01-01
 E | 0 | do CS2103 | 2026-02-01 | 2026-02-01
 D | 0 | do CS2103 | 2026-02-01
 E | 0 | do CS2103 | 2026-02-01 | 2026-02-01
+T | 0 | buy bread
+T | 0 | hi
+T | 0 | hiii
+D | 0 | return book | 2019-12-02
+D | 0 | return book | 2019-12-02
