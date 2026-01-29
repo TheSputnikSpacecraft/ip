@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Makes sense of user commands.
  */
@@ -32,6 +33,8 @@ public class Parser {
                 return parseDeadline(fullCommand, words);
             case "EVENT":
                 return parseEvent(fullCommand, words);
+            case "FIND":
+                return parseFind(words);
             default:
                 throw new RequiemException("I'm sorry, but I don't know what that means :-(");
         }
@@ -98,5 +101,12 @@ public class Parser {
         } catch (java.time.format.DateTimeParseException e) {
             throw new RequiemException("Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
         }
+    }
+
+    private static Command parseFind(String[] words) throws RequiemException {
+        if (words.length < 2 || words[1].trim().isEmpty()) {
+            throw new RequiemException("You need to specify a keyword to find.");
+        }
+        return new FindCommand(words[1].trim());
     }
 }
