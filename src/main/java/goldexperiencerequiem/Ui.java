@@ -7,7 +7,18 @@ import java.util.Scanner;
  */
 public class Ui {
     private final Scanner scanner;
-    private static final String LINE = "____________________________________________________________";
+    private static final String LINE_DIVIDER = "____________________________________________________________";
+    private static final String GREETING_MESSAGE = " Hello! I'm Requiem\n What can I do for you?";
+    private static final String ERROR_PREFIX = " Error: ";
+    private static final String LOADING_ERROR_MESSAGE = " Error loading tasks from file.";
+    private static final String EXIT_MESSAGE = " Bye. Hope to see you again soon!";
+
+    private static final String MESSAGE_TASK_ADDED = " Got it. I've added this task:";
+    private static final String MESSAGE_TASK_DELETED = " Noted. I've removed this task:";
+    private static final String MESSAGE_TASK_LIST = " Here are the tasks in your list:";
+    private static final String MESSAGE_TASK_MARKED = " Nice! I've marked this task as done:";
+    private static final String MESSAGE_TASK_UNMARKED = " OK, I've marked this task as not done yet:";
+    private static final String MESSAGE_TASKS_COUNT = " Now you have %d tasks in the list.";
 
     /**
      * Initializes the user interface.
@@ -17,20 +28,19 @@ public class Ui {
     }
 
     /**
-     * Prints the welcome message to the user.
+     * Displays the welcome message to the user.
      */
     public void showWelcome() {
         showLine();
-        System.out.println(" Hello! I'm Requiem");
-        System.out.println(" What can I do for you?");
+        System.out.println(GREETING_MESSAGE);
         showLine();
     }
 
     /**
-     * Prints the divider line to the user.
+     * Displays the divider line to the user.
      */
     public void showLine() {
-        System.out.println(LINE);
+        System.out.println(LINE_DIVIDER);
     }
 
     /**
@@ -48,21 +58,77 @@ public class Ui {
      * @param message The error message to print.
      */
     public void showError(String message) {
-        System.out.println(" Error: " + message);
+        System.out.println(ERROR_PREFIX + message);
     }
 
     /**
      * Displays a loading error message to the user.
      */
     public void showLoadingError() {
-        System.out.println(" Error loading tasks from file.");
+        System.out.println(LOADING_ERROR_MESSAGE);
     }
 
     /**
      * Displays the exit message to the user.
      */
     public void showExit() {
-        System.out.println(" Bye. Hope to see you again soon!");
+        System.out.println(EXIT_MESSAGE);
+    }
+
+    /**
+     * Displays that a task has been added.
+     *
+     * @param task       The task that was added.
+     * @param totalTasks The total number of tasks after adding.
+     */
+    public void showTaskAdded(Task task, int totalTasks) {
+        System.out.println(MESSAGE_TASK_ADDED);
+        System.out.println("   " + task);
+        System.out.println(String.format(MESSAGE_TASKS_COUNT, totalTasks));
+    }
+
+    /**
+     * Displays that a task has been deleted.
+     *
+     * @param task       The task that was removed.
+     * @param totalTasks The total number of tasks after deletion.
+     */
+    public void showTaskDeleted(Task task, int totalTasks) {
+        System.out.println(MESSAGE_TASK_DELETED);
+        System.out.println("   " + task);
+        System.out.println(String.format(MESSAGE_TASKS_COUNT, totalTasks));
+    }
+
+    /**
+     * Displays all tasks in the list.
+     *
+     * @param tasks The task list to display.
+     */
+    public void showTaskList(TaskList tasks) {
+        System.out.println(MESSAGE_TASK_LIST);
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + tasks.getTask(i));
+        }
+    }
+
+    /**
+     * Displays that a task has been marked as done.
+     *
+     * @param task The task that was marked.
+     */
+    public void showTaskMarked(Task task) {
+        System.out.println(MESSAGE_TASK_MARKED);
+        System.out.println("   " + task);
+    }
+
+    /**
+     * Displays that a task has been marked as undone.
+     *
+     * @param task The task that was unmarked.
+     */
+    public void showTaskUnmarked(Task task) {
+        System.out.println(MESSAGE_TASK_UNMARKED);
+        System.out.println("   " + task);
     }
 
     /**

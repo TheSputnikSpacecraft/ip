@@ -8,6 +8,12 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
 
+    private static final String DEADLINE_TYPE_ICON = "D";
+    private static final String BY_PREFIX = " (by: ";
+    private static final String BY_SUFFIX = ")";
+    private static final String FILE_DELIMITER = " | ";
+    private static final String DATE_OUTPUT_FORMAT = "MMM d yyyy";
+
     protected LocalDate by;
 
     /**
@@ -24,20 +30,21 @@ public class Deadline extends Task {
     /**
      * Returns the string representation of the deadline task.
      *
-     * @return The string representation.
+     * @return The deadline task icon, status icon, description, and by date.
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        return "[" + DEADLINE_TYPE_ICON + "]" + super.toString() + BY_PREFIX
+                + by.format(DateTimeFormatter.ofPattern(DATE_OUTPUT_FORMAT)) + BY_SUFFIX;
     }
 
     /**
-     * Returns the string representation of the deadline task for saving to a file.
+     * Returns the file-friendly string representation of the deadline task.
      *
-     * @return The file-friendly string representation.
+     * @return File format string.
      */
     @Override
     public String toFileFormat() {
-        return "D | " + super.toFileFormat() + " | " + by;
+        return DEADLINE_TYPE_ICON + FILE_DELIMITER + super.toFileFormat() + FILE_DELIMITER + by;
     }
 }

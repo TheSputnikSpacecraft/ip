@@ -18,13 +18,19 @@ public class Task {
         this.isDone = false;
     }
 
+    private static final String STATUS_DONE_ICON = "X";
+    private static final String STATUS_NOT_DONE_ICON = " ";
+    private static final String FILE_DONE_INDICATOR = "1";
+    private static final String FILE_NOT_DONE_INDICATOR = "0";
+    private static final String FILE_DELIMITER = " | ";
+
     /**
      * Returns the status icon of the task (X for done, empty for not done).
      *
      * @return The status icon.
      */
     public String getStatusIcon() {
-        return (isDone ? "X" : " "); // mark done task with X
+        return (isDone ? STATUS_DONE_ICON : STATUS_NOT_DONE_ICON);
     }
 
     /**
@@ -57,6 +63,6 @@ public class Task {
      * @return File-friendly string representation.
      */
     public String toFileFormat() {
-        return (isDone ? "1" : "0") + " | " + description;
+        return (isDone ? FILE_DONE_INDICATOR : FILE_NOT_DONE_INDICATOR) + FILE_DELIMITER + description;
     }
 }

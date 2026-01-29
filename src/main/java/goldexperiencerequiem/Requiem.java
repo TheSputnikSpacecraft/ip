@@ -55,12 +55,14 @@ public class Requiem {
         ui.close();
     }
 
+    private static final String DEFAULT_FILE_NAME = "requiem.txt";
+
     /**
      * Serves as the entry point of the application.
      *
      * @param args The command line arguments (not used).
      */
     public static void main(String[] args) {
-        new Requiem("requiem.txt").run();
+        new Requiem(DEFAULT_FILE_NAME).run();
     }
 }

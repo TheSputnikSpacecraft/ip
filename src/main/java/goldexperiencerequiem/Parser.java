@@ -1,9 +1,41 @@
 package goldexperiencerequiem;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 /**
  * Makes sense of user commands.
  */
 public class Parser {
+
+    private static final String BYE_COMMAND = "BYE";
+    private static final String LIST_COMMAND = "LIST";
+    private static final String MARK_COMMAND = "MARK";
+    private static final String UNMARK_COMMAND = "UNMARK";
+    private static final String DELETE_COMMAND = "DELETE";
+    private static final String TODO_COMMAND = "TODO";
+    private static final String DEADLINE_COMMAND = "DEADLINE";
+    private static final String EVENT_COMMAND = "EVENT";
+
+    private static final String DEADLINE_DELIMITER = "/by";
+    private static final String EVENT_FROM_DELIMITER = "/from";
+    private static final String EVENT_TO_DELIMITER = "/to";
+
+    private static final int DEADLINE_COMMAND_LENGTH = 9; // "deadline ".length()
+    private static final int DEADLINE_DELIMITER_LENGTH = 3; // "/by".length()
+    private static final int EVENT_COMMAND_LENGTH = 6; // "event ".length()
+    private static final int EVENT_FROM_DELIMITER_LENGTH = 5; // "/from".length()
+    private static final int EVENT_TO_DELIMITER_LENGTH = 3; // "/to".length()
+
+    private static final String ERROR_UNKNOWN_COMMAND = "I'm sorry, but I don't know what that means :-(";
+    private static final String ERROR_SPECIFY_INDEX = "You need to specify a task index.";
+    private static final String ERROR_INVALID_INDEX = "The task index must be a number.";
+    private static final String ERROR_EMPTY_TODO = "The description of a todo cannot be empty.";
+    private static final String ERROR_EMPTY_DEADLINE = "The description of a deadline cannot be empty.";
+    private static final String ERROR_MISSING_BY = "The deadline must have a /by time.";
+    private static final String ERROR_EMPTY_EVENT = "The description of an event cannot be empty.";
+    private static final String ERROR_MISSING_FROM_TO = "The event must have /from and /to times.";
+    private static final String ERROR_INVALID_DATE = "Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).";
 
     /**
      * Parses the user input into a Command object.
@@ -17,87 +49,87 @@ public class Parser {
         String commandWord = words[0].toUpperCase();
 
         switch (commandWord) {
-            case "BYE":
+            case BYE_COMMAND:
                 return new ExitCommand();
-            case "LIST":
+            case LIST_COMMAND:
                 return new ListCommand();
-            case "MARK":
+            case MARK_COMMAND:
                 return new MarkCommand(parseIndex(words));
-            case "UNMARK":
+            case UNMARK_COMMAND:
                 return new UnmarkCommand(parseIndex(words));
-            case "DELETE":
+            case DELETE_COMMAND:
                 return new DeleteCommand(parseIndex(words));
-            case "TODO":
+            case TODO_COMMAND:
                 return parseTodo(words);
-            case "DEADLINE":
+            case DEADLINE_COMMAND:
                 return parseDeadline(fullCommand, words);
-            case "EVENT":
+            case EVENT_COMMAND:
                 return parseEvent(fullCommand, words);
             default:
-                throw new RequiemException("I'm sorry, but I don't know what that means :-(");
+                throw new RequiemException(ERROR_UNKNOWN_COMMAND);
         }
     }
 
     private static int parseIndex(String[] words) throws RequiemException {
         if (words.length < 2) {
-            throw new RequiemException("You need to specify a task index.");
+            throw new RequiemException(ERROR_SPECIFY_INDEX);
         }
         try {
             return Integer.parseInt(words[1]) - 1;
         } catch (NumberFormatException e) {
-            throw new RequiemException("The task index must be a number.");
+            throw new RequiemException(ERROR_INVALID_INDEX);
         }
     }
 
     private static Command parseTodo(String[] words) throws RequiemException {
         if (words.length < 2 || words[1].trim().isEmpty()) {
-            throw new RequiemException("The description of a todo cannot be empty.");
+            throw new RequiemException(ERROR_EMPTY_TODO);
         }
         return new AddCommand(new Todo(words[1].trim()));
     }
 
     private static Command parseDeadline(String fullCommand, String[] words) throws RequiemException {
         if (words.length < 2 || words[1].trim().isEmpty()) {
-            throw new RequiemException("The description of a deadline cannot be empty.");
+            throw new RequiemException(ERROR_EMPTY_DEADLINE);
         }
-        int byIndex = fullCommand.indexOf("/by");
+        int byIndex = fullCommand.indexOf(DEADLINE_DELIMITER);
         if (byIndex == -1) {
-            throw new RequiemException("The deadline must have a /by time.");
+            throw new RequiemException(ERROR_MISSING_BY);
         }
-        String description = fullCommand.substring(9, byIndex).trim();
+        String description = fullCommand.substring(DEADLINE_COMMAND_LENGTH, byIndex).trim();
         if (description.isEmpty()) {
-            throw new RequiemException("The description of a deadline cannot be empty.");
+            throw new RequiemException(ERROR_EMPTY_DEADLINE);
         }
-        String by = fullCommand.substring(byIndex + 3).trim();
+        String by = fullCommand.substring(byIndex + DEADLINE_DELIMITER_LENGTH).trim();
         try {
-            java.time.LocalDate date = java.time.LocalDate.parse(by);
+            LocalDate date = LocalDate.parse(by);
             return new AddCommand(new Deadline(description, date));
-        } catch (java.time.format.DateTimeParseException e) {
-            throw new RequiemException("Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
+        } catch (DateTimeParseException e) {
+            throw new RequiemException(ERROR_INVALID_DATE);
         }
     }
 
     private static Command parseEvent(String fullCommand, String[] words) throws RequiemException {
         if (words.length < 2 || words[1].trim().isEmpty()) {
-            throw new RequiemException("The description of an event cannot be empty.");
+            throw new RequiemException(ERROR_EMPTY_EVENT);
         }
-        int fromIndex = fullCommand.indexOf("/from");
-        int toIndex = fullCommand.indexOf("/to");
+        int fromIndex = fullCommand.indexOf(EVENT_FROM_DELIMITER);
+        int toIndex = fullCommand.indexOf(EVENT_TO_DELIMITER);
         if (fromIndex == -1 || toIndex == -1) {
-            throw new RequiemException("The event must have /from and /to times.");
+            throw new RequiemException(ERROR_MISSING_FROM_TO);
         }
-        String description = fullCommand.substring(6, fromIndex).trim();
+        String description = fullCommand.substring(EVENT_COMMAND_LENGTH, fromIndex).trim();
         if (description.isEmpty()) {
-            throw new RequiemException("The description of an event cannot be empty.");
+            throw new RequiemException(ERROR_EMPTY_EVENT);
         }
-        String from = fullCommand.substring(fromIndex + 5, toIndex).trim();
-        String to = fullCommand.substring(toIndex + 3).trim();
+        String from = fullCommand.substring(fromIndex + EVENT_FROM_DELIMITER_LENGTH, toIndex).trim();
+        String to = fullCommand.substring(toIndex + EVENT_TO_DELIMITER_LENGTH).trim();
         try {
-            java.time.LocalDate fromDate = java.time.LocalDate.parse(from);
-            java.time.LocalDate toDate = java.time.LocalDate.parse(to);
+            LocalDate fromDate = LocalDate.parse(from);
+            LocalDate toDate = LocalDate.parse(to);
             return new AddCommand(new Event(description, fromDate, toDate));
-        } catch (java.time.format.DateTimeParseException e) {
-            throw new RequiemException("Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
+        } catch (DateTimeParseException e) {
+            throw new RequiemException(ERROR_INVALID_DATE);
         }
     }
 }
