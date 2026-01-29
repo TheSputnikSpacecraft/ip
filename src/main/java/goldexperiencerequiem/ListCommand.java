@@ -1,4 +1,4 @@
-package main.java.goldexperiencerequiem;
+package goldexperiencerequiem;
 /**
  * Represents a command to list all tasks in the task list.
  */
