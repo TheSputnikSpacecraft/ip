@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -6,6 +7,13 @@ import java.time.format.DateTimeFormatter;
  * Represents an event task.
  */
 public class Event extends Task {
+
+    private static final String EVENT_TYPE_ICON = "E";
+    private static final String FROM_PREFIX = " (from: ";
+    private static final String TO_PREFIX = " to: ";
+    private static final String SUFFIX = ")";
+    private static final String FILE_DELIMITER = " | ";
+    private static final String DATE_OUTPUT_FORMAT = "MMM d yyyy";
 
     protected LocalDate from;
     protected LocalDate to;
@@ -26,16 +34,23 @@ public class Event extends Task {
     /**
      * Returns the string representation of the event task.
      *
-     * @return The string representation of the event task.
+     * @return The event task icon, status icon, description, from date, and to
+     *         date.
      */
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + from.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + " to: "
-                + to.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_OUTPUT_FORMAT);
+        return "[" + EVENT_TYPE_ICON + "]" + super.toString() + FROM_PREFIX
+                + from.format(formatter) + TO_PREFIX + to.format(formatter) + SUFFIX;
     }
 
+    /**
+     * Returns the file-friendly string representation of the event task.
+     *
+     * @return File format string.
+     */
     @Override
     public String toFileFormat() {
-        return "E | " + super.toFileFormat() + " | " + from + " | " + to;
+        return EVENT_TYPE_ICON + FILE_DELIMITER + super.toFileFormat() + FILE_DELIMITER + from + FILE_DELIMITER + to;
     }
 }

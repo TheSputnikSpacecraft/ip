@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Represents a todo task.
  */
@@ -13,18 +14,26 @@ public class Todo extends Task {
         super(description);
     }
 
+    private static final String TODO_TYPE_ICON = "T";
+    private static final String FILE_DELIMITER = " | ";
+
     /**
      * Returns the string representation of the todo task.
      *
-     * @return The string representation of the todo task.
+     * @return The todo task icon, status icon, and description.
      */
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return "[" + TODO_TYPE_ICON + "]" + super.toString();
     }
 
+    /**
+     * Returns the file-friendly string representation of the todo task.
+     *
+     * @return File format string.
+     */
     @Override
     public String toFileFormat() {
-        return "T | " + super.toFileFormat();
+        return TODO_TYPE_ICON + FILE_DELIMITER + super.toFileFormat();
     }
 }

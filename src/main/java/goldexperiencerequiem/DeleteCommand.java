@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Represents a command to delete a task from the task list.
  */
@@ -16,9 +17,7 @@ public class DeleteCommand extends Command {
         }
         Task removedTask = tasks.deleteTask(index);
         storage.save(tasks.getAllTasks());
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println("   " + removedTask);
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+        ui.showTaskDeleted(removedTask, tasks.size());
     }
 
     @Override
