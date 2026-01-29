@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Represents a task with a description.
  */
@@ -20,7 +21,7 @@ public class Task {
     /**
      * Returns the status icon of the task (X for done, empty for not done).
      *
-     * @return Status icon.
+     * @return The status icon.
      */
     public String getStatusIcon() {
         return (isDone ? "X" : " "); // mark done task with X

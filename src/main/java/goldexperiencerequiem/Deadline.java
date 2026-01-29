@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -23,13 +24,18 @@ public class Deadline extends Task {
     /**
      * Returns the string representation of the deadline task.
      *
-     * @return The string representation of the deadline task.
+     * @return The string representation.
      */
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " + by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 
+    /**
+     * Returns the string representation of the deadline task for saving to a file.
+     *
+     * @return The file-friendly string representation.
+     */
     @Override
     public String toFileFormat() {
         return "D | " + super.toFileFormat() + " | " + by;

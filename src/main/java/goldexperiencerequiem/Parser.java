@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Makes sense of user commands.
  */

@@ -6,6 +6,11 @@ package goldexperiencerequiem;
 public class UnmarkCommand extends Command {
     private final int index;
 
+    /**
+     * Creates a new UnmarkCommand with the given index.
+     *
+     * @param index The index of the task to be marked as undone.
+     */
     public UnmarkCommand(int index) {
         this.index = index;
     }
