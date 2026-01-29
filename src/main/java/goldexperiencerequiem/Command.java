@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Represents an executable command.
  */
@@ -16,7 +17,7 @@ public abstract class Command {
     /**
      * Indicates whether the application should exit after this command.
      *
-     * @return true if the app should exit, false otherwise.
+     * @return True if the app should exit, false otherwise.
      */
     public abstract boolean isExit();
 }

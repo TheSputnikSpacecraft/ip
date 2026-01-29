@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Requiem is a personal assistant chatbot.
  * It follows an OOP structure with specialized classes for Ui, Storage,
@@ -11,7 +12,7 @@ public class Requiem {
     private Ui ui;
 
     /**
-     * Initializes the Requiem assistant.
+     * Initializes the Requiem assistant with the specified storage file name.
      *
      * @param fileName The name of the file used for storage.
      */
@@ -27,7 +28,7 @@ public class Requiem {
     }
 
     /**
-     * Runs the main loop of the assistant.
+     * Starts the main loop of the assistant.
      */
     public void run() {
         ui.showWelcome();
@@ -55,9 +56,9 @@ public class Requiem {
     }
 
     /**
-     * Entry point of the application.
+     * Serves as the entry point of the application.
      *
-     * @param args (not used).
+     * @param args The command line arguments (not used).
      */
     public static void main(String[] args) {
         new Requiem("requiem.txt").run();

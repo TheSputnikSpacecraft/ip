@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -75,6 +76,12 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Parses a single line from the storage file into a Task object.
+     *
+     * @param line The line to parse.
+     * @return The corresponding Task object, or null if the line is corrupted.
+     */
     private Task parseTask(String line) {
         try {
             // Use split with limit to handle descriptions that might contain " | "

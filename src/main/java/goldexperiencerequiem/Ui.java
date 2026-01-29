@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 import java.util.Scanner;
 
 /**
@@ -8,6 +9,9 @@ public class Ui {
     private final Scanner scanner;
     private static final String LINE = "____________________________________________________________";
 
+    /**
+     * Initializes the user interface.
+     */
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
@@ -39,7 +43,7 @@ public class Ui {
     }
 
     /**
-     * Prints an error message to the user.
+     * Displays an error message to the user.
      *
      * @param message The error message to print.
      */
@@ -48,14 +52,14 @@ public class Ui {
     }
 
     /**
-     * Prints a loading error message to the user.
+     * Displays a loading error message to the user.
      */
     public void showLoadingError() {
         System.out.println(" Error loading tasks from file.");
     }
 
     /**
-     * Prints the exit message to the user.
+     * Displays the exit message to the user.
      */
     public void showExit() {
         System.out.println(" Bye. Hope to see you again soon!");

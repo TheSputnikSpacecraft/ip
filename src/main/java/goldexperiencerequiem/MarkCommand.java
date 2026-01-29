@@ -1,10 +1,16 @@
 package goldexperiencerequiem;
+
 /**
  * Represents a command to mark a task as done in the task list.
  */
 public class MarkCommand extends Command {
     private final int index;
 
+    /**
+     * Creates a new MarkCommand with the given index.
+     *
+     * @param index The index of the task to be marked as done.
+     */
     public MarkCommand(int index) {
         this.index = index;
     }

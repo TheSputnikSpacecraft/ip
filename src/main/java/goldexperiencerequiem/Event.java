@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -26,7 +27,7 @@ public class Event extends Task {
     /**
      * Returns the string representation of the event task.
      *
-     * @return The string representation of the event task.
+     * @return The string representation.
      */
     @Override
     public String toString() {
@@ -34,6 +35,11 @@ public class Event extends Task {
                 + to.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 
+    /**
+     * Returns the string representation of the event task for saving to a file.
+     *
+     * @return The file-friendly string representation.
+     */
     @Override
     public String toFileFormat() {
         return "E | " + super.toFileFormat() + " | " + from + " | " + to;

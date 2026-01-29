@@ -1,4 +1,5 @@
 package goldexperiencerequiem;
+
 /**
  * Represents a todo task.
  */
@@ -16,13 +17,18 @@ public class Todo extends Task {
     /**
      * Returns the string representation of the todo task.
      *
-     * @return The string representation of the todo task.
+     * @return The string representation.
      */
     @Override
     public String toString() {
         return "[T]" + super.toString();
     }
 
+    /**
+     * Returns the string representation of the todo task for saving to a file.
+     *
+     * @return The file-friendly string representation.
+     */
     @Override
     public String toFileFormat() {
         return "T | " + super.toFileFormat();
