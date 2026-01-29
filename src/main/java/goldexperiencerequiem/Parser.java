@@ -1,8 +1,11 @@
 package goldexperiencerequiem;
 
+<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+=======
+>>>>>>> branch-Level-9
 /**
  * Makes sense of user commands.
  */
@@ -65,6 +68,8 @@ public class Parser {
                 return parseDeadline(fullCommand, words);
             case EVENT_COMMAND:
                 return parseEvent(fullCommand, words);
+            case "FIND":
+                return parseFind(words);
             default:
                 throw new RequiemException(ERROR_UNKNOWN_COMMAND);
         }
@@ -131,5 +136,12 @@ public class Parser {
         } catch (DateTimeParseException e) {
             throw new RequiemException(ERROR_INVALID_DATE);
         }
+    }
+
+    private static Command parseFind(String[] words) throws RequiemException {
+        if (words.length < 2 || words[1].trim().isEmpty()) {
+            throw new RequiemException("You need to specify a keyword to find.");
+        }
+        return new FindCommand(words[1].trim());
     }
 }

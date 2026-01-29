@@ -132,6 +132,18 @@ public class Ui {
     }
 
     /**
+     * Displays the matching tasks for a find command.
+     *
+     * @param matchingTasks The list of tasks that match the keyword.
+     */
+    public void showMatchingTasks(java.util.ArrayList<Task> matchingTasks) {
+        System.out.println(" Here are the matching tasks in your list:");
+        for (int i = 0; i < matchingTasks.size(); i++) {
+            System.out.println(" " + (i + 1) + "." + matchingTasks.get(i));
+        }
+    }
+
+    /**
      * Closes the scanner used for reading commands.
      */
     public void close() {

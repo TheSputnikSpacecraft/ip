@@ -13,3 +13,5 @@ T | 0 | yayitworked
 T | 0 | git
 T | 0 | testtest
 T | 0 | yayyifixedit
+T | 0 | read book
+T | 0 | buy bread
