@@ -1,4 +1,4 @@
-package main.java.goldexperiencerequiem;
+package goldexperiencerequiem;
 /**
  * Represents a task with a description.
  */

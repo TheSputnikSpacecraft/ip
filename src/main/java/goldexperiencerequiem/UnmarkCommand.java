@@ -1,4 +1,4 @@
-package main.java.goldexperiencerequiem;
+package goldexperiencerequiem;
 
 /**
  * Represents a command to mark a task as undone in the task list.
