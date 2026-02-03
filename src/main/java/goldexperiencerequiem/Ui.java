@@ -1,9 +1,16 @@
 package goldexperiencerequiem;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Handles interactions with the user.
+ * <p>
+ * This UI supports two modes:
+ * <ul>
+ *     <li><b>CLI mode</b>: prints output to the terminal and reads input using {@link Scanner}.</li>
+ *     <li><b>GUI mode</b>: buffers output internally so the GUI can display it.</li>
+ * </ul>
  */
 public class Ui {
     private static final String LINE_DIVIDER = "____________________________________________________________";
@@ -22,10 +29,64 @@ public class Ui {
     private final Scanner scanner;
 
     /**
-     * Initializes the user interface.
+     * Stores output text when in GUI mode. In CLI mode, output is printed directly.
+     */
+    private final StringBuilder buffer = new StringBuilder();
+
+    /**
+     * Indicates whether the UI is in GUI mode. If true, output is stored in {@link #buffer}.
+     */
+    private boolean isGuiMode = false;
+
+    /**
+     * Initializes the user interface in CLI mode by default.
      */
     public Ui() {
         this.scanner = new Scanner(System.in);
+    }
+
+    /**
+     * Enables GUI mode.
+     * <p>
+     * In GUI mode, output will be stored internally instead of being printed to the terminal.
+     */
+    public void enableGuiMode() {
+        isGuiMode = true;
+    }
+
+    /**
+     * Clears any previously buffered output.
+     * <p>
+     * This should be called before generating a new response in GUI mode.
+     */
+    public void resetBuffer() {
+        buffer.setLength(0);
+    }
+
+    /**
+     * Returns the currently buffered output as a single string.
+     *
+     * @return The buffered output with trailing/leading whitespace trimmed.
+     */
+    public String getBufferedOutput() {
+        return buffer.toString().trim();
+    }
+
+    /**
+     * Outputs a line to the appropriate destination:
+     * <ul>
+     *     <li>CLI mode: prints to {@code System.out}</li>
+     *     <li>GUI mode: appends to {@link #buffer}</li>
+     * </ul>
+     *
+     * @param s The line to output.
+     */
+    private void printLine(String s) {
+        if (isGuiMode) {
+            buffer.append(s).append("\n");
+        } else {
+            System.out.println(s);
+        }
     }
 
     /**
@@ -33,7 +94,7 @@ public class Ui {
      */
     public void showWelcome() {
         showLine();
-        System.out.println(GREETING_MESSAGE);
+        printLine(GREETING_MESSAGE);
         showLine();
     }
 
@@ -41,13 +102,13 @@ public class Ui {
      * Displays the divider line to the user.
      */
     public void showLine() {
-        System.out.println(LINE_DIVIDER);
+        printLine(LINE_DIVIDER);
     }
 
     /**
-     * Reads a command from the user's input.
+     * Reads a command from the user's input (CLI mode only).
      *
-     * @return The raw input string.
+     * @return The raw input string, trimmed.
      */
     public String readCommand() {
         return scanner.nextLine().trim();
@@ -56,24 +117,24 @@ public class Ui {
     /**
      * Displays an error message to the user.
      *
-     * @param message The error message to print.
+     * @param message The error message to display.
      */
     public void showError(String message) {
-        System.out.println(ERROR_PREFIX + message);
+        printLine(ERROR_PREFIX + message);
     }
 
     /**
      * Displays a loading error message to the user.
      */
     public void showLoadingError() {
-        System.out.println(LOADING_ERROR_MESSAGE);
+        printLine(LOADING_ERROR_MESSAGE);
     }
 
     /**
      * Displays the exit message to the user.
      */
     public void showExit() {
-        System.out.println(EXIT_MESSAGE);
+        printLine(EXIT_MESSAGE);
     }
 
     /**
@@ -83,9 +144,9 @@ public class Ui {
      * @param totalTasks The total number of tasks after adding.
      */
     public void showTaskAdded(Task task, int totalTasks) {
-        System.out.println(MESSAGE_TASK_ADDED);
-        System.out.println("   " + task);
-        System.out.println(String.format(MESSAGE_TASKS_COUNT, totalTasks));
+        printLine(MESSAGE_TASK_ADDED);
+        printLine("   " + task);
+        printLine(String.format(MESSAGE_TASKS_COUNT, totalTasks));
     }
 
     /**
@@ -95,9 +156,9 @@ public class Ui {
      * @param totalTasks The total number of tasks after deletion.
      */
     public void showTaskDeleted(Task task, int totalTasks) {
-        System.out.println(MESSAGE_TASK_DELETED);
-        System.out.println("   " + task);
-        System.out.println(String.format(MESSAGE_TASKS_COUNT, totalTasks));
+        printLine(MESSAGE_TASK_DELETED);
+        printLine("   " + task);
+        printLine(String.format(MESSAGE_TASKS_COUNT, totalTasks));
     }
 
     /**
@@ -106,9 +167,9 @@ public class Ui {
      * @param tasks The task list to display.
      */
     public void showTaskList(TaskList tasks) {
-        System.out.println(MESSAGE_TASK_LIST);
+        printLine(MESSAGE_TASK_LIST);
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + tasks.getTask(i));
+            printLine(" " + (i + 1) + "." + tasks.getTask(i));
         }
     }
 
@@ -118,8 +179,8 @@ public class Ui {
      * @param task The task that was marked.
      */
     public void showTaskMarked(Task task) {
-        System.out.println(MESSAGE_TASK_MARKED);
-        System.out.println("   " + task);
+        printLine(MESSAGE_TASK_MARKED);
+        printLine("   " + task);
     }
 
     /**
@@ -128,8 +189,8 @@ public class Ui {
      * @param task The task that was unmarked.
      */
     public void showTaskUnmarked(Task task) {
-        System.out.println(MESSAGE_TASK_UNMARKED);
-        System.out.println("   " + task);
+        printLine(MESSAGE_TASK_UNMARKED);
+        printLine("   " + task);
     }
 
     /**
@@ -137,15 +198,15 @@ public class Ui {
      *
      * @param matchingTasks The list of tasks that match the keyword.
      */
-    public void showMatchingTasks(java.util.ArrayList<Task> matchingTasks) {
-        System.out.println(" Here are the matching tasks in your list:");
+    public void showMatchingTasks(ArrayList<Task> matchingTasks) {
+        printLine(" Here are the matching tasks in your list:");
         for (int i = 0; i < matchingTasks.size(); i++) {
-            System.out.println(" " + (i + 1) + "." + matchingTasks.get(i));
+            printLine(" " + (i + 1) + "." + matchingTasks.get(i));
         }
     }
 
     /**
-     * Closes the scanner used for reading commands.
+     * Closes the scanner used for reading commands (CLI mode).
      */
     public void close() {
         scanner.close();
