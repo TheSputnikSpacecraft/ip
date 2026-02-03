@@ -8,8 +8,10 @@ import java.util.Scanner;
  * <p>
  * This UI supports two modes:
  * <ul>
- *     <li><b>CLI mode</b>: prints output to the terminal and reads input using {@link Scanner}.</li>
- *     <li><b>GUI mode</b>: buffers output internally so the GUI can display it.</li>
+ * <li><b>CLI mode</b>: prints output to the terminal and reads input using
+ * {@link Scanner}.</li>
+ * <li><b>GUI mode</b>: buffers output internally so the GUI can display
+ * it.</li>
  * </ul>
  */
 public class Ui {
@@ -34,7 +36,8 @@ public class Ui {
     private final StringBuilder buffer = new StringBuilder();
 
     /**
-     * Indicates whether the UI is in GUI mode. If true, output is stored in {@link #buffer}.
+     * Indicates whether the UI is in GUI mode. If true, output is stored in
+     * {@link #buffer}.
      */
     private boolean isGuiMode = false;
 
@@ -48,7 +51,8 @@ public class Ui {
     /**
      * Enables GUI mode.
      * <p>
-     * In GUI mode, output will be stored internally instead of being printed to the terminal.
+     * In GUI mode, output will be stored internally instead of being printed to the
+     * terminal.
      */
     public void enableGuiMode() {
         isGuiMode = true;
@@ -73,19 +77,21 @@ public class Ui {
     }
 
     /**
-     * Outputs a line to the appropriate destination:
+     * Outputs lines to the appropriate destination:
      * <ul>
-     *     <li>CLI mode: prints to {@code System.out}</li>
-     *     <li>GUI mode: appends to {@link #buffer}</li>
+     * <li>CLI mode: prints to {@code System.out}</li>
+     * <li>GUI mode: appends to {@link #buffer}</li>
      * </ul>
      *
-     * @param s The line to output.
+     * @param lines The lines to output.
      */
-    private void printLine(String s) {
-        if (isGuiMode) {
-            buffer.append(s).append("\n");
-        } else {
-            System.out.println(s);
+    private void printLine(String... lines) {
+        for (String line : lines) {
+            if (isGuiMode) {
+                buffer.append(line).append("\n");
+            } else {
+                System.out.println(line);
+            }
         }
     }
 
@@ -144,9 +150,9 @@ public class Ui {
      * @param totalTasks The total number of tasks after adding.
      */
     public void showTaskAdded(Task task, int totalTasks) {
-        printLine(MESSAGE_TASK_ADDED);
-        printLine("   " + task);
-        printLine(String.format(MESSAGE_TASKS_COUNT, totalTasks));
+        printLine(MESSAGE_TASK_ADDED,
+                "   " + task,
+                String.format(MESSAGE_TASKS_COUNT, totalTasks));
     }
 
     /**
@@ -156,9 +162,9 @@ public class Ui {
      * @param totalTasks The total number of tasks after deletion.
      */
     public void showTaskDeleted(Task task, int totalTasks) {
-        printLine(MESSAGE_TASK_DELETED);
-        printLine("   " + task);
-        printLine(String.format(MESSAGE_TASKS_COUNT, totalTasks));
+        printLine(MESSAGE_TASK_DELETED,
+                "   " + task,
+                String.format(MESSAGE_TASKS_COUNT, totalTasks));
     }
 
     /**
@@ -179,8 +185,7 @@ public class Ui {
      * @param task The task that was marked.
      */
     public void showTaskMarked(Task task) {
-        printLine(MESSAGE_TASK_MARKED);
-        printLine("   " + task);
+        printLine(MESSAGE_TASK_MARKED, "   " + task);
     }
 
     /**
@@ -189,8 +194,7 @@ public class Ui {
      * @param task The task that was unmarked.
      */
     public void showTaskUnmarked(Task task) {
-        printLine(MESSAGE_TASK_UNMARKED);
-        printLine("   " + task);
+        printLine(MESSAGE_TASK_UNMARKED, "   " + task);
     }
 
     /**
