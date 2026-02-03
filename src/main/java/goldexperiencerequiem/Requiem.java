@@ -7,6 +7,8 @@ package goldexperiencerequiem;
  */
 public class Requiem {
 
+    private static final String DEFAULT_FILE_NAME = "requiem.txt";
+
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
@@ -54,8 +56,6 @@ public class Requiem {
         }
         ui.close();
     }
-
-    private static final String DEFAULT_FILE_NAME = "requiem.txt";
 
     /**
      * Serves as the entry point of the application.

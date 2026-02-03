@@ -6,7 +6,6 @@ import java.util.Scanner;
  * Handles interactions with the user.
  */
 public class Ui {
-    private final Scanner scanner;
     private static final String LINE_DIVIDER = "____________________________________________________________";
     private static final String GREETING_MESSAGE = " Hello! I'm Requiem\n What can I do for you?";
     private static final String ERROR_PREFIX = " Error: ";
@@ -19,6 +18,8 @@ public class Ui {
     private static final String MESSAGE_TASK_MARKED = " Nice! I've marked this task as done:";
     private static final String MESSAGE_TASK_UNMARKED = " OK, I've marked this task as not done yet:";
     private static final String MESSAGE_TASKS_COUNT = " Now you have %d tasks in the list.";
+
+    private final Scanner scanner;
 
     /**
      * Initializes the user interface.

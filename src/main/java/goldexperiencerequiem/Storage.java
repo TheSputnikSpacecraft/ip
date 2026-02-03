@@ -120,9 +120,9 @@ public class Storage {
                 case DEADLINE_INDICATOR:
                     if (parts.length >= DEADLINE_PARTS_COUNT) {
                         try {
-                            java.time.LocalDate date = java.time.LocalDate.parse(parts[3]);
+                            LocalDate date = LocalDate.parse(parts[3]);
                             task = new Deadline(description, date);
-                        } catch (java.time.format.DateTimeParseException e) {
+                        } catch (DateTimeParseException e) {
                             // Skip corrupted date
                         }
                     }
@@ -130,10 +130,10 @@ public class Storage {
                 case EVENT_INDICATOR:
                     if (parts.length >= EVENT_PARTS_COUNT) {
                         try {
-                            java.time.LocalDate fromDate = java.time.LocalDate.parse(parts[3]);
-                            java.time.LocalDate toDate = java.time.LocalDate.parse(parts[4]);
+                            LocalDate fromDate = LocalDate.parse(parts[3]);
+                            LocalDate toDate = LocalDate.parse(parts[4]);
                             task = new Event(description, fromDate, toDate);
-                        } catch (java.time.format.DateTimeParseException e) {
+                        } catch (DateTimeParseException e) {
                             // Skip corrupted date
                         }
                     }

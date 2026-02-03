@@ -5,6 +5,9 @@ package goldexperiencerequiem;
  */
 public class Todo extends Task {
 
+     private static final String TODO_TYPE_ICON = "T";
+     private static final String FILE_DELIMITER = " | ";
+
      /**
       * Creates a new Todo task with the given description.
       *
@@ -13,9 +16,6 @@ public class Todo extends Task {
      public Todo(String description) {
           super(description);
      }
-
-     private static final String TODO_TYPE_ICON = "T";
-     private static final String FILE_DELIMITER = " | ";
 
      /**
       * Returns the string representation of the todo task.
@@ -37,3 +37,4 @@ public class Todo extends Task {
           return TODO_TYPE_ICON + FILE_DELIMITER + super.toFileFormat();
      }
 }
+// INDENT FIX
