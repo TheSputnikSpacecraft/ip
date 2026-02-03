@@ -1,11 +1,8 @@
 package goldexperiencerequiem;
 
-<<<<<<< HEAD
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-=======
->>>>>>> branch-Level-9
 /**
  * Makes sense of user commands.
  */
@@ -145,3 +142,4 @@ public class Parser {
         return new FindCommand(words[1].trim());
     }
 }
+// INDENT FIX

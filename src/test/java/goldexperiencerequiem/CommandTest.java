@@ -1,22 +1,23 @@
 package goldexperiencerequiem;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.io.TempDir;
-import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.nio.file.Path;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class CommandTest {
+
+    @TempDir
+    Path tempDir;
 
     private TaskList tasks;
     private Ui ui;
     private Storage storage;
-
-    @TempDir
-    Path tempDir;
 
     @BeforeEach
     public void setUp() {

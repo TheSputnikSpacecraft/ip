@@ -4,6 +4,12 @@ package goldexperiencerequiem;
  * Represents a task with a description.
  */
 public class Task {
+    private static final String STATUS_DONE_ICON = "X";
+    private static final String STATUS_NOT_DONE_ICON = " ";
+    private static final String FILE_DONE_INDICATOR = "1";
+    private static final String FILE_NOT_DONE_INDICATOR = "0";
+    private static final String FILE_DELIMITER = " | ";
+
     protected String description;
 
     protected boolean isDone;
@@ -17,12 +23,6 @@ public class Task {
         this.description = description;
         this.isDone = false;
     }
-
-    private static final String STATUS_DONE_ICON = "X";
-    private static final String STATUS_NOT_DONE_ICON = " ";
-    private static final String FILE_DONE_INDICATOR = "1";
-    private static final String FILE_NOT_DONE_INDICATOR = "0";
-    private static final String FILE_DELIMITER = " | ";
 
     /**
      * Returns the status icon of the task (X for done, empty for not done).
