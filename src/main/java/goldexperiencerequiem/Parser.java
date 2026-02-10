@@ -21,9 +21,7 @@ public class Parser {
     private static final String EVENT_FROM_DELIMITER = "/from";
     private static final String EVENT_TO_DELIMITER = "/to";
 
-    private static final int DEADLINE_COMMAND_LENGTH = 9; // "deadline ".length()
     private static final int DEADLINE_DELIMITER_LENGTH = 3; // "/by".length()
-    private static final int EVENT_COMMAND_LENGTH = 6; // "event ".length()
     private static final int EVENT_FROM_DELIMITER_LENGTH = 5; // "/from".length()
     private static final int EVENT_TO_DELIMITER_LENGTH = 3; // "/to".length()
 
@@ -62,9 +60,9 @@ public class Parser {
             case TODO_COMMAND:
                 return parseTodo(words);
             case DEADLINE_COMMAND:
-                return parseDeadline(fullCommand, words);
+                return parseDeadline(words);
             case EVENT_COMMAND:
-                return parseEvent(fullCommand, words);
+                return parseEvent(words);
             case "FIND":
                 return parseFind(words);
             default:
@@ -90,19 +88,20 @@ public class Parser {
         return new AddCommand(new Todo(words[1].trim()));
     }
 
-    private static Command parseDeadline(String fullCommand, String[] words) throws RequiemException {
+    private static Command parseDeadline(String[] words) throws RequiemException {
         if (words.length < 2 || words[1].trim().isEmpty()) {
             throw new RequiemException(ERROR_EMPTY_DEADLINE);
         }
-        int byIndex = fullCommand.indexOf(DEADLINE_DELIMITER);
+        String args = words[1];
+        int byIndex = args.indexOf(DEADLINE_DELIMITER);
         if (byIndex == -1) {
             throw new RequiemException(ERROR_MISSING_BY);
         }
-        String description = fullCommand.substring(DEADLINE_COMMAND_LENGTH, byIndex).trim();
+        String description = args.substring(0, byIndex).trim();
         if (description.isEmpty()) {
             throw new RequiemException(ERROR_EMPTY_DEADLINE);
         }
-        String by = fullCommand.substring(byIndex + DEADLINE_DELIMITER_LENGTH).trim();
+        String by = args.substring(byIndex + DEADLINE_DELIMITER_LENGTH).trim();
         try {
             LocalDate date = LocalDate.parse(by);
             return new AddCommand(new Deadline(description, date));
@@ -111,21 +110,22 @@ public class Parser {
         }
     }
 
-    private static Command parseEvent(String fullCommand, String[] words) throws RequiemException {
+    private static Command parseEvent(String[] words) throws RequiemException {
         if (words.length < 2 || words[1].trim().isEmpty()) {
             throw new RequiemException(ERROR_EMPTY_EVENT);
         }
-        int fromIndex = fullCommand.indexOf(EVENT_FROM_DELIMITER);
-        int toIndex = fullCommand.indexOf(EVENT_TO_DELIMITER);
+        String args = words[1];
+        int fromIndex = args.indexOf(EVENT_FROM_DELIMITER);
+        int toIndex = args.indexOf(EVENT_TO_DELIMITER);
         if (fromIndex == -1 || toIndex == -1) {
             throw new RequiemException(ERROR_MISSING_FROM_TO);
         }
-        String description = fullCommand.substring(EVENT_COMMAND_LENGTH, fromIndex).trim();
+        String description = args.substring(0, fromIndex).trim();
         if (description.isEmpty()) {
             throw new RequiemException(ERROR_EMPTY_EVENT);
         }
-        String from = fullCommand.substring(fromIndex + EVENT_FROM_DELIMITER_LENGTH, toIndex).trim();
-        String to = fullCommand.substring(toIndex + EVENT_TO_DELIMITER_LENGTH).trim();
+        String from = args.substring(fromIndex + EVENT_FROM_DELIMITER_LENGTH, toIndex).trim();
+        String to = args.substring(toIndex + EVENT_TO_DELIMITER_LENGTH).trim();
         try {
             LocalDate fromDate = LocalDate.parse(from);
             LocalDate toDate = LocalDate.parse(to);
