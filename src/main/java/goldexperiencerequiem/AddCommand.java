@@ -26,7 +26,16 @@ public class AddCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        assert task != null : "AddCommand: task should not be null";
+        assert tasks != null : "AddCommand: tasks should not be null";
+        assert ui != null : "AddCommand: ui should not be null";
+        assert storage != null : "AddCommand: storage should not be null";
+
+        int oldSize = tasks.size();
         tasks.addTask(task);
+
+        assert tasks.size() == oldSize + 1 : "AddCommand: task list size should increase by 1 after add";
+
         storage.save(tasks.getAllTasks());
         ui.showTaskAdded(task, tasks.size());
     }
