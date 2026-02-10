@@ -100,6 +100,12 @@ public class Storage {
      * @param line The line to parse.
      * @return The corresponding Task object, or null if the line is corrupted.
      */
+    /**
+     * Parses a single line from the storage file into a Task object.
+     *
+     * @param line The line to parse.
+     * @return The corresponding Task object, or null if the line is corrupted.
+     */
     private Task parseTask(String line) {
         try {
             // Use split with limit to handle descriptions that might contain " | "
@@ -109,45 +115,53 @@ public class Storage {
             }
 
             String type = parts[0];
-            boolean isDone = parts[1].equals(DONE_INDICATOR);
             String description = parts[2];
-            Task task = null;
+            Task task = decodeTask(type, description, parts);
 
-            switch (type) {
-                case TODO_INDICATOR:
-                    task = new Todo(description);
-                    break;
-                case DEADLINE_INDICATOR:
-                    if (parts.length >= DEADLINE_PARTS_COUNT) {
-                        try {
-                            LocalDate date = LocalDate.parse(parts[3]);
-                            task = new Deadline(description, date);
-                        } catch (DateTimeParseException e) {
-                            // Skip corrupted date
-                        }
-                    }
-                    break;
-                case EVENT_INDICATOR:
-                    if (parts.length >= EVENT_PARTS_COUNT) {
-                        try {
-                            LocalDate fromDate = LocalDate.parse(parts[3]);
-                            LocalDate toDate = LocalDate.parse(parts[4]);
-                            task = new Event(description, fromDate, toDate);
-                        } catch (DateTimeParseException e) {
-                            // Skip corrupted date
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            if (task != null && isDone) {
+            if (task != null && parts[1].equals(DONE_INDICATOR)) {
                 task.markAsDone();
             }
             return task;
         } catch (Exception e) {
             // Handle corruption by skipping the line
+            return null;
+        }
+    }
+
+    private Task decodeTask(String type, String description, String[] parts) {
+        switch (type) {
+            case TODO_INDICATOR:
+                return new Todo(description);
+            case DEADLINE_INDICATOR:
+                return decodeDeadline(description, parts);
+            case EVENT_INDICATOR:
+                return decodeEvent(description, parts);
+            default:
+                return null;
+        }
+    }
+
+    private Task decodeDeadline(String description, String[] parts) {
+        if (parts.length < DEADLINE_PARTS_COUNT) {
+            return null;
+        }
+        try {
+            LocalDate date = LocalDate.parse(parts[3]);
+            return new Deadline(description, date);
+        } catch (DateTimeParseException e) {
+            return null;
+        }
+    }
+
+    private Task decodeEvent(String description, String[] parts) {
+        if (parts.length < EVENT_PARTS_COUNT) {
+            return null;
+        }
+        try {
+            LocalDate fromDate = LocalDate.parse(parts[3]);
+            LocalDate toDate = LocalDate.parse(parts[4]);
+            return new Event(description, fromDate, toDate);
+        } catch (DateTimeParseException e) {
             return null;
         }
     }

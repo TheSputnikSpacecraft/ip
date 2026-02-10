@@ -150,9 +150,7 @@ public class Ui {
      * @param totalTasks The total number of tasks after adding.
      */
     public void showTaskAdded(Task task, int totalTasks) {
-        printLine(MESSAGE_TASK_ADDED,
-                "   " + task,
-                String.format(MESSAGE_TASKS_COUNT, totalTasks));
+        showTaskChange(MESSAGE_TASK_ADDED, task, totalTasks);
     }
 
     /**
@@ -162,7 +160,18 @@ public class Ui {
      * @param totalTasks The total number of tasks after deletion.
      */
     public void showTaskDeleted(Task task, int totalTasks) {
-        printLine(MESSAGE_TASK_DELETED,
+        showTaskChange(MESSAGE_TASK_DELETED, task, totalTasks);
+    }
+
+    /**
+     * Helper to display task changes (add/delete).
+     *
+     * @param message    The message to display.
+     * @param task       The task involved.
+     * @param totalTasks The total number of tasks.
+     */
+    private void showTaskChange(String message, Task task, int totalTasks) {
+        printLine(message,
                 "   " + task,
                 String.format(MESSAGE_TASKS_COUNT, totalTasks));
     }
