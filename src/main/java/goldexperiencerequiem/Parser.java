@@ -17,6 +17,8 @@ public class Parser {
     private static final String DEADLINE_COMMAND = "DEADLINE";
     private static final String EVENT_COMMAND = "EVENT";
 
+    private static final String HELP_COMMAND = "HELP";
+
     private static final String DEADLINE_DELIMITER = "/by";
     private static final String EVENT_FROM_DELIMITER = "/from";
     private static final String EVENT_TO_DELIMITER = "/to";
@@ -65,6 +67,8 @@ public class Parser {
                 return parseEvent(words);
             case "FIND":
                 return parseFind(words);
+            case HELP_COMMAND:
+                return new HelpCommand();
             default:
                 throw new RequiemException(ERROR_UNKNOWN_COMMAND);
         }
