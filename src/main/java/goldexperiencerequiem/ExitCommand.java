@@ -14,6 +14,7 @@ public class ExitCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
+        assert ui != null : "ExitCommand: ui should not be null";
         ui.showExit();
     }
 

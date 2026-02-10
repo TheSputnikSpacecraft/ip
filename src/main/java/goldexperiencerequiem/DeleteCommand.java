@@ -22,10 +22,21 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws RequiemException {
+        assert tasks != null : "DeleteCommand: tasks should not be null";
+        assert ui != null : "DeleteCommand: ui should not be null";
+        assert storage != null : "DeleteCommand: storage should not be null";
+        assert index >= 0 : "DeleteCommand: index should be non-negative (parser should enforce this)";
+
         if (index < 0 || index >= tasks.size()) {
             throw new RequiemException("Task index out of bounds.");
         }
+
+        int oldSize = tasks.size();
         Task removedTask = tasks.deleteTask(index);
+
+        assert removedTask != null : "DeleteCommand: deleteTask should return a task";
+        assert tasks.size() == oldSize - 1 : "DeleteCommand: task list size should decrease by 1 after delete";
+
         storage.save(tasks.getAllTasks());
         ui.showTaskDeleted(removedTask, tasks.size());
     }

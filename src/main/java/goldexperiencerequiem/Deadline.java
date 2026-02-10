@@ -24,6 +24,7 @@ public class Deadline extends Task {
      */
     public Deadline(String description, LocalDate by) {
         super(description);
+        assert by != null : "Deadline: by date should not be null";
         this.by = by;
     }
 
@@ -34,6 +35,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toString() {
+        assert by != null : "Deadline: by date should not be null when formatting";
         return "[" + DEADLINE_TYPE_ICON + "]" + super.toString() + BY_PREFIX
                 + by.format(DateTimeFormatter.ofPattern(DATE_OUTPUT_FORMAT)) + BY_SUFFIX;
     }
@@ -45,6 +47,7 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileFormat() {
+        assert by != null : "Deadline: by date should not be null when serializing";
         return DEADLINE_TYPE_ICON + FILE_DELIMITER + super.toFileFormat() + FILE_DELIMITER + by;
     }
 }
