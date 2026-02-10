@@ -32,6 +32,12 @@ public class ParserTest {
     }
 
     @Test
+    public void parse_helpCommand_returnsHelpCommand() throws RequiemException {
+        Command command = Parser.parse("help");
+        assertTrue(command instanceof HelpCommand);
+    }
+
+    @Test
     public void parse_deadlineMissingBy_throwsRequiemException() {
         assertThrows(RequiemException.class, () -> Parser.parse("deadline return book"));
     }

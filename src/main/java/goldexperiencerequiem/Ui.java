@@ -219,6 +219,25 @@ public class Ui {
     }
 
     /**
+     * Displays the help message with a list of available commands.
+     */
+    public void showHelp() {
+        showLine();
+        printLine(" Here are the available commands:");
+        printLine(" 1. todo <description> - Adds a todo task.");
+        printLine(" 2. deadline <description> /by <date> - Adds a deadline task.");
+        printLine(" 3. event <description> /from <date> /to <date> - Adds an event task.");
+        printLine(" 4. list - Lists all tasks.");
+        printLine(" 5. mark <index> - Marks a task as done.");
+        printLine(" 6. unmark <index> - Marks a task as not done.");
+        printLine(" 7. delete <index> - Deletes a task.");
+        printLine(" 8. find <keyword> - Finds tasks with the keyword.");
+        printLine(" 9. help - Shows this help message.");
+        printLine(" 10. bye - Exits the application.");
+        showLine();
+    }
+
+    /**
      * Closes the scanner used for reading commands (CLI mode).
      */
     public void close() {
