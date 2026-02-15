@@ -19,4 +19,18 @@ public class DeadlineTest {
         Deadline deadline = new Deadline("return book", LocalDate.parse("2023-10-15"));
         assertEquals("D | 0 | return book | 2023-10-15", deadline.toFileFormat());
     }
+
+    @Test
+    public void equals_sameDescriptionAndDate_returnsTrue() {
+        Deadline d1 = new Deadline("return book", LocalDate.parse("2023-10-15"));
+        Deadline d2 = new Deadline("return book", LocalDate.parse("2023-10-15"));
+        assertEquals(d1, d2);
+    }
+
+    @Test
+    public void equals_differentDate_returnsFalse() {
+        Deadline d1 = new Deadline("return book", LocalDate.parse("2023-10-15"));
+        Deadline d2 = new Deadline("return book", LocalDate.parse("2023-10-16"));
+        org.junit.jupiter.api.Assertions.assertNotEquals(d1, d2);
+    }
 }

@@ -48,4 +48,25 @@ public class TaskTest {
         task.markAsDone();
         assertEquals("1 | test task", task.toFileFormat());
     }
+
+    @Test
+    public void equals_sameDescription_returnsTrue() {
+        Task task1 = new Task("test task");
+        Task task2 = new Task("test task");
+        assertEquals(task1, task2);
+    }
+
+    @Test
+    public void equals_differentDescription_returnsFalse() {
+        Task task1 = new Task("test task");
+        Task task2 = new Task("other task");
+        org.junit.jupiter.api.Assertions.assertNotEquals(task1, task2);
+    }
+
+    @Test
+    public void hashCode_sameDescription_sameHashCode() {
+        Task task1 = new Task("test task");
+        Task task2 = new Task("test task");
+        assertEquals(task1.hashCode(), task2.hashCode());
+    }
 }

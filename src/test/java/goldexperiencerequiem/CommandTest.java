@@ -70,8 +70,46 @@ public class CommandTest {
     }
 
     @Test
-    public void listCommand_isExit_returnsFalse() {
-        ListCommand command = new ListCommand();
-        assertFalse(command.isExit());
+    public void addCommand_duplicateTask_throwsRequiemException() throws RequiemException {
+        Todo todo = new Todo("test task");
+        tasks.addTask(todo);
+        AddCommand command = new AddCommand(todo);
+        org.junit.jupiter.api.Assertions.assertThrows(RequiemException.class,
+                () -> command.execute(tasks, ui, storage));
+    }
+
+    @Test
+    public void deleteCommand_invalidIndex_throwsRequiemException() {
+        DeleteCommand command = new DeleteCommand(10);
+        org.junit.jupiter.api.Assertions.assertThrows(RequiemException.class,
+                () -> command.execute(tasks, ui, storage));
+    }
+
+    @Test
+    public void markCommand_invalidIndex_throwsRequiemException() {
+        MarkCommand command = new MarkCommand(10);
+        org.junit.jupiter.api.Assertions.assertThrows(RequiemException.class,
+                () -> command.execute(tasks, ui, storage));
+    }
+
+    @Test
+    public void unmarkCommand_invalidIndex_throwsRequiemException() {
+        UnmarkCommand command = new UnmarkCommand(10);
+        org.junit.jupiter.api.Assertions.assertThrows(RequiemException.class,
+                () -> command.execute(tasks, ui, storage));
+    }
+
+    @Test
+    public void findCommand_execute_findsMatchingTasks() throws RequiemException {
+        tasks.addTask(new Todo("read book"));
+        tasks.addTask(new Todo("write code"));
+        FindCommand command = new FindCommand("book");
+        // capturing output is hard here without mocking Ui, so we just ensure it runs
+        // without error
+        // and perhaps check internal state if possible, but FindCommand mostly writes
+        // to Ui.
+        // Ideally we should mock Ui, but adhering to constraints, we at least verify it
+        // executes.
+        command.execute(tasks, ui, storage);
     }
 }

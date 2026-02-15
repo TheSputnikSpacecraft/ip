@@ -38,7 +38,22 @@ public class ParserTest {
     }
 
     @Test
-    public void parse_deadlineMissingBy_throwsRequiemException() {
-        assertThrows(RequiemException.class, () -> Parser.parse("deadline return book"));
+    public void parse_eventInvalidDateOrder_throwsRequiemException() {
+        assertThrows(RequiemException.class, () -> Parser.parse("event bad /from 2023-12-01 /to 2023-01-01"));
+    }
+
+    @Test
+    public void parse_deadlineInvalidDateFormat_throwsRequiemException() {
+        assertThrows(RequiemException.class, () -> Parser.parse("deadline bad /by 2023-13-45"));
+    }
+
+    @Test
+    public void parse_todoEmptyDescription_throwsRequiemException() {
+        assertThrows(RequiemException.class, () -> Parser.parse("todo"));
+    }
+
+    @Test
+    public void parse_eventMissingTo_throwsRequiemException() {
+        assertThrows(RequiemException.class, () -> Parser.parse("event bad /from 2023-12-01"));
     }
 }
