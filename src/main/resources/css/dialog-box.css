@@ -1,25 +1,39 @@
 .label {
-    -fx-background-color: linear-gradient(to bottom right, #00ffbf, #00ddff);
-    -fx-border-color: #d55e00 #009e73 #cc79a7 #0072b2;
-    -fx-border-width: 2px;
-    -fx-background-radius: 1em 1em 0 1em;
-    -fx-border-radius: 1em 1em 0 1em;
+    -fx-background-color: #2b2b2b; /* Dark Grey for User */
+    -fx-text-fill: #e0e0e0; /* Off-white text */
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-padding: 10px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 1px;
+}
+
+.user-label {
+    -fx-background-color: #2b2b2b;
+    -fx-text-fill: #e0e0e0;
+    -fx-border-color: #4a4a4a;
+}
+
+.duke-label {
+    -fx-background-color: #000000; /* Black for Duke */
+    -fx-text-fill: #ffd700; /* Gold text */
+    -fx-border-color: #ffd700;
+}
+
+.error-label {
+    -fx-background-color: #3b0000; /* Dark Red background */
+    -fx-text-fill: #ff6b6b; /* Light Red text */
+    -fx-border-color: #ff0000;
 }
 
 .reply-label {
-    -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+    /* Kept for potential future use but specific classes above are preferred */
 }
 
 #displayPicture {
-    /* Shadow effect on image. */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 5, 5);
-
-    /* Change size of image. */
-    -fx-scale-x: 1;
-    -fx-scale-y: 1;
-
-    /* Rotate image clockwise by degrees. */
-    -fx-rotate: 0;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
+
 

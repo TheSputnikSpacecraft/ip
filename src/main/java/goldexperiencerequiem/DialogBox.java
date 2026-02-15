@@ -15,7 +15,8 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * Represents a dialog box consisting of an ImageView to represent the speaker's face
+ * Represents a dialog box consisting of an ImageView to represent the speaker's
+ * face
  * and a label containing text from the speaker.
  */
 public class DialogBox extends HBox {
@@ -36,10 +37,16 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+
+        // Clip the profile picture to a circle
+        // We assume fitWidth/fitHeight are set in FXML or are square
+        javafx.scene.shape.Circle clip = new javafx.scene.shape.Circle(25, 25, 25);
+        displayPicture.setClip(clip);
     }
 
     /**
-     * Flips the dialog box such that the ImageView is on the left and text on the right.
+     * Flips the dialog box such that the ImageView is on the left and text on the
+     * right.
      */
     private void flip() {
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
@@ -49,12 +56,24 @@ public class DialogBox extends HBox {
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, img);
+        db.dialog.getStyleClass().add("user-label");
+        return db;
     }
 
-    public static DialogBox getDukeDialog(String text, Image img) {
+    public static DialogBox getDukeDialog(String text, Image img, boolean isError) {
         var db = new DialogBox(text, img);
         db.flip();
+        if (isError) {
+            db.dialog.getStyleClass().add("error-label");
+        } else {
+            db.dialog.getStyleClass().add("duke-label");
+        }
         return db;
+    }
+
+    // Maintain backward compatibility if needed, or just update call sites
+    public static DialogBox getDukeDialog(String text, Image img) {
+        return getDukeDialog(text, img, false);
     }
 }

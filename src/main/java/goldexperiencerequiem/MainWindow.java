@@ -23,10 +23,10 @@ public class MainWindow {
 
     private Requiem requiem;
 
-    private final Image userImage =
-            new Image(getClass().getResourceAsStream("/images/DaUser.png"));
-    private final Image requiemImage =
-            new Image(getClass().getResourceAsStream("/images/DaDuke.png")); // rename file later if you want
+    private final Image userImage = new Image(getClass().getResourceAsStream("/images/DaUser.png"));
+    private final Image requiemImage = new Image(getClass().getResourceAsStream("/images/DaDuke.png")); // rename file
+                                                                                                        // later if you
+                                                                                                        // want
 
     @FXML
     public void initialize() {
@@ -48,11 +48,11 @@ public class MainWindow {
         }
 
         String response = requiem.getResponse(input);
+        boolean isError = response.trim().startsWith("Error:");
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getDukeDialog(response, requiemImage) // can rename method later
-        );
+                DialogBox.getDukeDialog(response, requiemImage, isError));
 
         userInput.clear();
     }
