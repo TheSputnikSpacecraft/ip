@@ -48,7 +48,8 @@ public class MainWindow {
         }
 
         String response = requiem.getResponse(input);
-        boolean isError = response.trim().startsWith("Error:");
+        // Check for the error prefix defined in Ui.java (trimmed)
+        boolean isError = response.trim().startsWith("You ain't makin' sense");
 
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),

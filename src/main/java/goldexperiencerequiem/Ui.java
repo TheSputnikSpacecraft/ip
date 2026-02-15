@@ -16,17 +16,17 @@ import java.util.Scanner;
  */
 public class Ui {
     private static final String LINE_DIVIDER = "____________________________________________________________";
-    private static final String GREETING_MESSAGE = " Hello! I'm Requiem\n What can I do for you?";
-    private static final String ERROR_PREFIX = " Error: ";
-    private static final String LOADING_ERROR_MESSAGE = " Error loading tasks from file.";
-    private static final String EXIT_MESSAGE = " Bye. Hope to see you again soon!";
+    private static final String GREETING_MESSAGE = " Alright, Rust. What are we lookin' at today? Make it quick.";
+    private static final String ERROR_PREFIX = " You ain't makin' sense, partner. ";
+    private static final String LOADING_ERROR_MESSAGE = " File's corrupted. Great start.";
+    private static final String EXIT_MESSAGE = " I'm headin' home. Try not to overthink things while I'm gone.";
 
-    private static final String MESSAGE_TASK_ADDED = " Got it. I've added this task:";
-    private static final String MESSAGE_TASK_DELETED = " Noted. I've removed this task:";
-    private static final String MESSAGE_TASK_LIST = " Here are the tasks in your list:";
-    private static final String MESSAGE_TASK_MARKED = " Nice! I've marked this task as done:";
-    private static final String MESSAGE_TASK_UNMARKED = " OK, I've marked this task as not done yet:";
-    private static final String MESSAGE_TASKS_COUNT = " Now you have %d tasks in the list.";
+    private static final String MESSAGE_TASK_ADDED = " Filed it. The case keeps growin':";
+    private static final String MESSAGE_TASK_DELETED = " Tore that page out. One less headache:";
+    private static final String MESSAGE_TASK_LIST = " Here's what we got on the board:";
+    private static final String MESSAGE_TASK_MARKED = " Good. That lead's closed:";
+    private static final String MESSAGE_TASK_UNMARKED = " Re-opening that? Jesus, Rust. Fine:";
+    private static final String MESSAGE_TASKS_COUNT = " We got %d loose ends left.";
 
     private final Scanner scanner;
 

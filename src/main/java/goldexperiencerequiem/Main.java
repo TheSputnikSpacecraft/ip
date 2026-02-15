@@ -32,7 +32,8 @@ public class Main extends Application {
             stage.setMinHeight(220);
             stage.setMinWidth(417);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setRequiem(requiem);  // inject the Duke instance
+            stage.setTitle("Detective Hart's Log");
+            fxmlLoader.<MainWindow>getController().setRequiem(requiem); // inject the Duke instance
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
