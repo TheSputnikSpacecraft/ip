@@ -65,4 +65,19 @@ public class Task {
     public String toFileFormat() {
         return (isDone ? FILE_DONE_INDICATOR : FILE_NOT_DONE_INDICATOR) + FILE_DELIMITER + description;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Task task = (Task) o;
+        return description.equals(task.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return description.hashCode();
+    }
 }

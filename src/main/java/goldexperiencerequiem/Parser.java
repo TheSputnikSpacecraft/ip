@@ -36,6 +36,7 @@ public class Parser {
     private static final String ERROR_EMPTY_EVENT = "The description of an event cannot be empty.";
     private static final String ERROR_MISSING_FROM_TO = "The event must have /from and /to times.";
     private static final String ERROR_INVALID_DATE = "Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).";
+    private static final String ERROR_EVENT_DATE_ORDER = "Time doesn't flow backwards, Rust. Check your dates.";
 
     /**
      * Parses the user input into a Command object.
@@ -133,6 +134,9 @@ public class Parser {
         try {
             LocalDate fromDate = LocalDate.parse(from);
             LocalDate toDate = LocalDate.parse(to);
+            if (fromDate.isAfter(toDate)) {
+                throw new RequiemException(ERROR_EVENT_DATE_ORDER);
+            }
             return new AddCommand(new Event(description, fromDate, toDate));
         } catch (DateTimeParseException e) {
             throw new RequiemException(ERROR_INVALID_DATE);

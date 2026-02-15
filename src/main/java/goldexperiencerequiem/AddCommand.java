@@ -25,11 +25,15 @@ public class AddCommand extends Command {
      * @param storage The Storage object to save the updated task list.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) throws RequiemException {
         assert task != null : "AddCommand: task should not be null";
         assert tasks != null : "AddCommand: tasks should not be null";
         assert ui != null : "AddCommand: ui should not be null";
         assert storage != null : "AddCommand: storage should not be null";
+
+        if (tasks.hasDuplicate(task)) {
+            throw new RequiemException("We already went over this. Don't make me repeat myself.");
+        }
 
         int oldSize = tasks.size();
         tasks.addTask(task);

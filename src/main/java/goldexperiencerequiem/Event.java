@@ -53,5 +53,25 @@ public class Event extends Task {
      public String toFileFormat() {
           return EVENT_TYPE_ICON + FILE_DELIMITER + super.toFileFormat() + FILE_DELIMITER + from + FILE_DELIMITER + to;
      }
+
+     @Override
+     public boolean equals(Object o) {
+          if (this == o)
+               return true;
+          if (o == null || getClass() != o.getClass())
+               return false;
+          if (!super.equals(o))
+               return false;
+          Event event = (Event) o;
+          return from.equals(event.from) && to.equals(event.to);
+     }
+
+     @Override
+     public int hashCode() {
+          int result = super.hashCode();
+          result = 31 * result + from.hashCode();
+          result = 31 * result + to.hashCode();
+          return result;
+     }
 }
 // INDENT FIX

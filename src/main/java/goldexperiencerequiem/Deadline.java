@@ -50,4 +50,21 @@ public class Deadline extends Task {
         assert by != null : "Deadline: by date should not be null when serializing";
         return DEADLINE_TYPE_ICON + FILE_DELIMITER + super.toFileFormat() + FILE_DELIMITER + by;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
+        Deadline deadline = (Deadline) o;
+        return by.equals(deadline.by);
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * super.hashCode() + by.hashCode();
+    }
 }

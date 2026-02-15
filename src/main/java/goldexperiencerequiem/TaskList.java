@@ -82,4 +82,14 @@ public class TaskList {
     public ArrayList<Task> getAllTasks() {
         return tasks;
     }
+
+    /**
+     * Checks if the task list contains a duplicate of the given task.
+     *
+     * @param task The task to check for duplicates.
+     * @return True if a duplicate exists, false otherwise.
+     */
+    public boolean hasDuplicate(Task task) {
+        return tasks.contains(task);
+    }
 }

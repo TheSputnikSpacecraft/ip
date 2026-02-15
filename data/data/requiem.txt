@@ -3,3 +3,4 @@ T | 0 | hi
 T | 0 | find evidence
 D | 0 | return book | 2006-02-19
 T | 0 | say hi to killer
+T | 0 | investigate crash site
