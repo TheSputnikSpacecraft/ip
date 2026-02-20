@@ -12,6 +12,7 @@ public class Requiem {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
+    private boolean isLastCommandExit = false;
 
     /**
      * Initializes the Requiem assistant with the specified storage file name.
@@ -60,8 +61,10 @@ public class Requiem {
     /**
      * Generates a response for a single user input.
      * <p>
-     * This method is intended for GUI usage. It does not run a loop or read from stdin.
-     * Instead, it parses and executes exactly one command, buffers all UI output, and
+     * This method is intended for GUI usage. It does not run a loop or read from
+     * stdin.
+     * Instead, it parses and executes exactly one command, buffers all UI output,
+     * and
      * returns the result as a string for the GUI to display.
      *
      * @param input The user input string.
@@ -78,6 +81,7 @@ public class Requiem {
 
             Command command = Parser.parse(input);
             command.execute(tasks, ui, storage);
+            isLastCommandExit = command.isExit();
 
             return ui.getBufferedOutput();
         } catch (RequiemException e) {
@@ -87,6 +91,17 @@ public class Requiem {
             ui.showError(e.getMessage());
             return ui.getBufferedOutput();
         }
+    }
+
+    /**
+     * Returns whether the last command processed by {@link #getResponse} was an
+     * exit command.
+     *
+     * @return {@code true} if the last command was an exit command, {@code false}
+     *         otherwise.
+     */
+    public boolean isExitCommand() {
+        return isLastCommandExit;
     }
 
     /**

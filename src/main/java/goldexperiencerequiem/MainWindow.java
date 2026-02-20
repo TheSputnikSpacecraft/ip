@@ -1,11 +1,14 @@
 package goldexperiencerequiem;
 
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  * Controller for the main GUI.
@@ -42,13 +45,11 @@ public class MainWindow {
     private void handleUserInput() {
         String input = userInput.getText();
 
-        // optional: ignore empty input so you don't spam blank bubbles
         if (input == null || input.trim().isEmpty()) {
             return;
         }
 
         String response = requiem.getResponse(input);
-        // Check for the error prefix defined in Ui.java (trimmed)
         boolean isError = response.trim().startsWith("You ain't makin' sense");
 
         dialogContainer.getChildren().addAll(
@@ -56,5 +57,13 @@ public class MainWindow {
                 DialogBox.getDukeDialog(response, requiemImage, isError));
 
         userInput.clear();
+
+        if (requiem.isExitCommand()) {
+            userInput.setDisable(true);
+            sendButton.setDisable(true);
+            PauseTransition delay = new PauseTransition(Duration.millis(800));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
 }

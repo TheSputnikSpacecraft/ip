@@ -78,7 +78,7 @@ public class Parser {
     private static int parseIndex(String[] words) throws RequiemException {
         if (words.length < 2) {
             throw new RequiemException(ERROR_SPECIFY_INDEX);
-        }
+        }   
         try {
             return Integer.parseInt(words[1]) - 1;
         } catch (NumberFormatException e) {
