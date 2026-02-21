@@ -8,7 +8,7 @@
 
 ## 🚀 Quick Start
 
-1.  **Prerequisites**: Ensure you have **Java 11** or above installed.
+1.  **Prerequisites**: Ensure you have **Java 17** installed.
 2.  **Download**: Get the latest release from the [releases page](https://github.com/TheSputnikSpacecraft/ip/releases).
 3.  **Launch**: Run the application:
     ```bash
