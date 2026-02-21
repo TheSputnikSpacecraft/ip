@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * A GUI for Duke using FXML.
  */
 public class Main extends Application {
-    private static final String DEFAULT_FILE_PATH = "data/requiem.txt";
+    private static final String DEFAULT_FILE_PATH = "requiem.txt";
     private Requiem requiem;
 
     public Main(String filePath) {
