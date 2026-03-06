@@ -12,7 +12,7 @@
 2.  **Download**: Get the latest release from the [releases page](https://github.com/TheSputnikSpacecraft/ip/releases).
 3.  **Launch**: Run the application:
     ```bash
-    java -jar ip.jar
+    java -jar requiem.jar
     ```
 4.  **Engage**: The GUI will launch. Hart is waiting.
 
